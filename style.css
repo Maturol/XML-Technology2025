@@ -1,0 +1,54 @@
+body {
+    background-color: rgb(16, 16, 20);
+}
+
+.my-btn {
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid rgb(96, 96, 100);
+    background: rgb(16, 16, 20);
+    color: rgb(230, 230, 234);
+    font-size: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.my-btn:hover {
+    background: rgb(96, 96, 100);
+}
+
+.my-btn:active {
+    filter: brightness(130%);
+}
+
+.my-btn.primary {
+    background: rgb(19, 175, 240);
+    color: rgb(16, 16, 20);
+    border: none;
+}
+
+
+.my-btn.execute {
+    width: 110px;
+    border-radius: 10px;
+}
+
+.result {
+    width: 216px;
+    height: 50px;
+    margin-bottom: 15px;
+    padding-right: 10px;
+    background: rgb(16, 16, 20);
+    text-align: right;
+    color: rgb(230, 230, 234);
+    font-size: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid rgb(96, 96, 100);
+    border-radius: 10px;
+}
+
