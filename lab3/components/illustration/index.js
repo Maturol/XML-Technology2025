@@ -12,6 +12,7 @@ export class IllustrationComponent {
                     <h2 class="card-title">${data.title}</h2>
                     <p class="card-text"><strong>Автор:</strong> ${data.author}</p>
                     <p class="card-text"><strong>Дата публикации:</strong> ${data.date}</p>
+                    <p class="card-text"><strong>Лайки:</strong> ${data.likes}</p>
                     <p class="card-text">${data.description}</p>
                 </div>
             </div>
