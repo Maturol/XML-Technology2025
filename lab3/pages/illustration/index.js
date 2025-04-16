@@ -17,7 +17,6 @@ export class IllustrationPage {
             `
                 <div class="container mt-4 text-light">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <button id="back-button" class="btn btn-primary">Назад</button>
                         <button id="go-home" class="btn btn-secondary">Домой</button>
                     </div>
                     <div id="illustration-page"></div>
@@ -34,7 +33,9 @@ export class IllustrationPage {
     render() {
         this.parent.innerHTML = this.getHTML()
 
-        document.getElementById("back-button").addEventListener("click", () => this.clickBack())
+        const backButton = new BackButtonComponent(this.pageRoot)
+        backButton.render(this.clickBack.bind(this))
+
         document.getElementById("go-home").addEventListener("click", () => this.clickBack())
 
         const illustration = new IllustrationComponent(this.pageRoot)

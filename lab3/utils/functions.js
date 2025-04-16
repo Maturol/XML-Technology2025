@@ -2,7 +2,7 @@
 export function sumOfSquares(illustrations) {
     let sum = 0;
     for (let i = 0; i < illustrations.length; i++) {
-      const likes = illustrations[i].likes || 0;
+      const likes = illustrations[i].likes;
       sum += likes * likes;
     }
     return sum;
@@ -25,19 +25,19 @@ export function sumOfSquares(illustrations) {
     if (Array.isArray(a) && Array.isArray(b)) {
       if (a.length !== b.length) return false;
       for (let i = 0; i < a.length; i++) {
-        if (!isEqualArtValue(a[i], b[i])) return false;
+        if (!isEqual(a[i], b[i])) return false;
       }
       return true;
     }
   
-    if (typeof a === "object" && typeof b === "object" && a && b) {
-      return isEqualArtObj(a, b);
+    if (typeof a === "object" && typeof b === "object") {
+      return isEqualObj(a, b);
     }
   
     return a === b;
   }
   
-  // 4. Палиндром (цикл)
+  // 4. Палиндром
   export function isPalindrom(value) {
     const str = value.toString().toLowerCase().replace(/[^a-zа-я0-9]/gi, "");
     for (let i = 0; i < str.length / 2; i++) {

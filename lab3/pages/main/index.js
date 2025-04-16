@@ -34,7 +34,7 @@ export class MainPage {
     getHTML() {
         return `
             <div class="container mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="mb-3">
                     <h2 class="text-light">Art Gallery</h2>
                     <div>
                         <input type="text" id="search-input" class="form-control me-2" placeholder="Поиск по названию...">
@@ -43,7 +43,7 @@ export class MainPage {
                         <button id="go-home" class="btn btn-secondary">Домой</button>
                     </div>
                 </div>
-                <div id="main-page" class="d-flex flex-wrap gap-3 mb-4"></div>
+                <div id="main-page" class="mb-4"></div>
                 <div id="analysis-result" class="bg-dark text-light p-3 rounded"></div>
                 <div id="interaction-tools" class="bg-secondary text-light p-3 mt-4 rounded">
                     <h5> Сравнение иллюстраций</h5>
@@ -65,7 +65,7 @@ export class MainPage {
 
     getData() {
         return [
-          { id: 1, src: "https://cdna.artstation.com/p/assets/images/images/018/773/854/large/shin-jong-hun-asdasf.jpg?1560684630", title: "Elune", author: "Shin Jong Hun", date: "2019-06-16", description: "A magical character painted in a fantasy setting.", likes: 12 },
+          { id: 1, src: "https://cdna.artstation.com/p/assets/images/images/018/773/854/large/shin-jong-hun-asdasf.jpg?1560684630", title: "Elule", author: "Shin Jong Hun", date: "2019-06-16", description: "A magical character painted in a fantasy setting.", likes: 12 },
           { id: 2, src: "https://cdnb.artstation.com/p/assets/images/images/045/336/111/large/lorenzo-lanfranconi-painting-san-donato-3.jpg?1642491687", title: "Walk to San Donato", author: "Lorenzo Lanfranconi", date: "2022-01-18", description: "A serene landscape in traditional style.", likes: 5 },
           { id: 3, src: "https://cdna.artstation.com/p/assets/images/images/034/605/970/large/shin-jong-hun-1612619763114.jpg?1612746686", title: "Mother Nature", author: "Shin Jong Hun", date: "2021-02-08", description: "Places I want to go...", likes: 6 },
           { id: 4, src: "https://cdna.artstation.com/p/assets/images/images/019/693/026/large/wangjie-li-apex-bangalore.jpg?1564605666", title: "Bangalore", author: "Wangjie Li", date: "2019-06-25", description: "Illustration and sketches of Bangalore from Apex...", likes: 17 },
@@ -116,6 +116,10 @@ export class MainPage {
             const title2Palin = isPalindromDoWhile(art2.title);
             const author1Palin = isPalindrom(art1.author);
             const author2Palin = isPalindromDoWhile(art2.author);
+            const date1Palin = isPalindrom(art1.date);
+            const date2Palin = isPalindromDoWhile(art2.date);
+            const likes1Palin = isPalindrom(art1.likes);
+            const likes2Palin = isPalindromDoWhile(art2.likes);
         
             resultBox.innerHTML = `
                 <div class="alert alert-info">
@@ -136,13 +140,15 @@ export class MainPage {
                     
                     <hr>
                     <h6>Сравнение дат публикаций:</h6>
-                    "${art1.date}" — "${art2.date}"
-                    <br> ${dateEqual ? "Даты совпадают" : "Даты различаются"}
+                    ${dateEqual ? "Даты совпадают" : "Даты различаются"}
+                    <br> "${art1.date}" — ${date1Palin ? "палиндром" : "не палиндром"}
+                    <br> "${art2.date}" — ${date2Palin ? "палиндром" : "не палиндром"}
 
                     <hr>
                     <h6>Сравнение количества лайков:</h6>
-                    ${art1.likes} лайков — ${art2.likes} лайков
-                    <br> ${likesEqual ? "Количество лайков совпадает" : "Количество лайков различается"}
+                    ${likesEqual ? "Количество лайков совпадает" : "Количество лайков различается"}
+                    <br> "${art1.likes}" — ${likes1Palin ? "палиндром" : "не палиндром"}
+                    <br> "${art2.likes}" — ${likes2Palin ? "палиндром" : "не палиндром"}
                 </div>
             `;
         });
