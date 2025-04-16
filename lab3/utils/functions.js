@@ -1,5 +1,5 @@
 // 1. Сумма квадратов лайков
-export function sumOfArtLikes(illustrations) {
+export function sumOfSquares(illustrations) {
     let sum = 0;
     for (let i = 0; i < illustrations.length; i++) {
       const likes = illustrations[i].likes || 0;
@@ -9,7 +9,7 @@ export function sumOfArtLikes(illustrations) {
   }
   
   // 2. Сравнение объектов
-  export function isEqualArtObj(obj1, obj2) {
+  export function isEqualObj(obj1, obj2) {
     const keys1 = Object.keys(obj1);
     const keys2 = Object.keys(obj2);
     if (keys1.length !== keys2.length) return false;
@@ -21,7 +21,7 @@ export function sumOfArtLikes(illustrations) {
   }
   
   // 3. Сравнение любых значений
-  export function isEqualArtValue(a, b) {
+  export function isEqual(a, b) {
     if (Array.isArray(a) && Array.isArray(b)) {
       if (a.length !== b.length) return false;
       for (let i = 0; i < a.length; i++) {
@@ -38,7 +38,7 @@ export function sumOfArtLikes(illustrations) {
   }
   
   // 4. Палиндром (цикл)
-  export function isPalindromArt(value) {
+  export function isPalindrom(value) {
     const str = value.toString().toLowerCase().replace(/[^a-zа-я0-9]/gi, "");
     for (let i = 0; i < str.length / 2; i++) {
       if (str[i] !== str[str.length - 1 - i]) return false;
@@ -47,7 +47,7 @@ export function sumOfArtLikes(illustrations) {
   }
   
   // 4. Палиндром (цикл с постусловием)
-  export function isPalindromArtDoWhile(value) {
+  export function isPalindromDoWhile(value) {
     const str = value.toString().toLowerCase().replace(/[^a-zа-я0-9]/gi, "");
   
     const uniqueChars = new Set(str);

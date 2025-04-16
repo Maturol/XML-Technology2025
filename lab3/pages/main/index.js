@@ -1,6 +1,6 @@
 import { IllustrationCardComponent } from "../../components/illustration-card/index.js";
 import { IllustrationPage } from "../illustration/index.js";
-import {sumOfArtLikes, isEqualArtObj, isEqualArtValue, isPalindromArt, isPalindromArtDoWhile} from "../../utils/functions.js";
+import {sumOfSquares, isEqualObj, isEqual, isPalindrom, isPalindromDoWhile} from "../../utils/functions.js";
 
 export class MainPage {
     constructor(parent) {
@@ -106,16 +106,16 @@ export class MainPage {
             const art1 = this.data.find(item => item.id === id1);
             const art2 = this.data.find(item => item.id === id2);
         
-            const titleEqual = isEqualArtValue(art1.title, art2.title);
-            const authorEqual = isEqualArtValue(art1.author, art2.author);
-            const dateEqual = isEqualArtValue(art1.date, art2.date);
-            const likesEqual = isEqualArtValue(art1.likes, art2.likes);
-            const fullEqual = isEqualArtObj(art1, art2);
+            const titleEqual = isEqual(art1.title, art2.title);
+            const authorEqual = isEqual(art1.author, art2.author);
+            const dateEqual = isEqual(art1.date, art2.date);
+            const likesEqual = isEqual(art1.likes, art2.likes);
+            const fullEqual = isEqualObj(art1, art2);
         
-            const title1Palin = isPalindromArt(art1.title);
-            const title2Palin = isPalindromArtDoWhile(art2.title);
-            const author1Palin = isPalindromArt(art1.author);
-            const author2Palin = isPalindromArtDoWhile(art2.author);
+            const title1Palin = isPalindrom(art1.title);
+            const title2Palin = isPalindromDoWhile(art2.title);
+            const author1Palin = isPalindrom(art1.author);
+            const author2Palin = isPalindromDoWhile(art2.author);
         
             resultBox.innerHTML = `
                 <div class="alert alert-info">
@@ -151,7 +151,7 @@ export class MainPage {
             const resultDiv = document.getElementById("analysis-result");
             let output = '';
         
-            const sumLikes = sumOfArtLikes(this.data);
+            const sumLikes = sumOfSquares(this.data);
         
             output += `<h5> Анализ иллюстраций:</h5>`;
             output += `<p> Сумма квадратов лайков: <strong>${sumLikes}</strong></p>`;
