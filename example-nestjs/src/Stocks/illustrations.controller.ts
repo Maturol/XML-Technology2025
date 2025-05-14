@@ -4,7 +4,7 @@ import { CreateIllustrationDto } from './dto/create-illustration.dto';
 import { UpdateIllustrationDto } from './dto/update-illustration.dto';
 import { Illustration } from './entities/illustration.entity';
 
-@Controller('stocks')
+@Controller('illustrations')
 export class IllustrationsController {
   constructor(private readonly illustrationsService: IllustrationsService) {}
 
