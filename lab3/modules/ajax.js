@@ -11,8 +11,9 @@ class Ajax {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        return data;
+
+        const text = await res.text();
+        return text ? JSON.parse(text) : null;
     }
 
     async patch(url, payload) {
@@ -21,8 +22,13 @@ class Ajax {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        const data = await res.json();
-        return data;
+
+        if (res.status === 204 || res.headers.get("content-length") === "0") {
+            return null; // или return {}; если ожидаете объект
+        }
+
+        const text = await res.text();
+        return text ? JSON.parse(text) : null;
     }
 
     async delete(url) {

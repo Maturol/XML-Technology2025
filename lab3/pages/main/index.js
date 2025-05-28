@@ -14,14 +14,14 @@ export class MainPage {
         return document.getElementById('main-page')
     }
 
-    clickCard(id) {
-        ajax.get(illustrationUrls.getIllustrationById(id), async (data) => {
-            const module = await import("../illustration/index.js");
-            const IllustrationPage = module.IllustrationPage;
-            const illustrationPage = new IllustrationPage(this.parent, data);
-            illustrationPage.render();
-        });
+    async clickCard(id) {
+        const data = await ajax.get(illustrationUrls.getIllustrationById(id));
+        const module = await import("../illustration/index.js");
+        const IllustrationPage = module.IllustrationPage;
+        const illustrationPage = new IllustrationPage(this.parent, data);
+        illustrationPage.render();
     }
+
 
     editCard(item) {
         import("../add-edit-illustration/index.js").then((module) => {
@@ -31,11 +31,10 @@ export class MainPage {
         });
     }
 
-    deleteCard(id) {
-        ajax.delete(illustrationUrls.removeIllustrationById(id), () => {
-            this.data = this.data.filter(item => item.id !== id);
-            this.renderData(this.data);
-        });
+    async deleteCard(id) {
+        await ajax.delete(illustrationUrls.removeIllustrationById(id));
+        this.data = this.data.filter(item => item.id !== id);
+        this.renderData(this.data);    
     }
 
     addCard() {
@@ -95,20 +94,19 @@ export class MainPage {
         });
     }
 
-    getData() {
-        ajax.get(illustrationUrls.getIllustrations(), (data) => {
-            const normalizedData = data.map(item => ({
-                id: item.id,
-                src: item.src,
-                title: item.title,
-                author: item.author,
-                date: item.date,
-                description: item.description,
-                likes: item.likes
-            }));
-            this.data = normalizedData;
-            this.renderData(data);
-        });
+    async getData() {
+        const data = await ajax.get(illustrationUrls.getIllustrations());
+        const normalizedData = data.map(item => ({
+            id: item.id,
+            src: item.src,
+            title: item.title,
+            author: item.author,
+            date: item.date,
+            description: item.description,
+            likes: item.likes
+        }));
+        this.data = normalizedData;
+        this.renderData(normalizedData);
     }
     
     renderData(items) {
@@ -127,7 +125,7 @@ export class MainPage {
         this.fillSelectOptions(items);
     }
 
-    render() {
+    async render() {
         this.parent.innerHTML = '';
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
@@ -203,7 +201,7 @@ export class MainPage {
             resultDiv.innerHTML = output;
         });
 
-        this.getData();
+        await this.getData();
     }
 
     filterCards(query) {
