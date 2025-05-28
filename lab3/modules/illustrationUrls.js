@@ -8,6 +8,9 @@ class IllustrationUrls {
     getIllustrationById(id) {
         return `${this.baseUrl}/illustrations/${id}`;
     }
+    searchByTitle(query) {
+        return `${this.baseUrl}/illustrations?title=${encodeURIComponent(query)}`;
+    }
     createIllustration() {
         return `${this.baseUrl}/illustrations`;
     }

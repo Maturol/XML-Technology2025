@@ -207,8 +207,18 @@ export class MainPage {
     }
 
     filterCards(query) {
-        const filtered = this.data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-        this.renderData(filtered);
+        if (!query.trim()) {
+            this.renderData(this.data);
+            return;
+        }
+
+        ajax.get(illustrationUrls.searchByTitle(query), (filteredData) => {
+            if (!Array.isArray(filteredData)) {
+                console.error('Ошибка: данные поиска не являются массивом');
+                return;
+            }
+            this.renderData(filteredData);
+        });
     }
 
     displayCards(data) {
