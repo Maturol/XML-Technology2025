@@ -35,7 +35,7 @@ export class EditIllustrationPage {
     render() {
         this.parent.innerHTML = this.getHTML();
 
-        document.getElementById("illustration-form").addEventListener("submit", (e) => {
+        document.getElementById("illustration-form").addEventListener("submit", async (e) => {
             e.preventDefault();
             const payload = {
                 title: document.getElementById("title").value,
@@ -47,16 +47,13 @@ export class EditIllustrationPage {
             };
 
             if (this.data && this.data.id) {
-                ajax.patch(illustrationUrls.updateIllustrationById(this.data.id), payload, () => {
-                    const main = new MainPage(this.parent);
-                    main.render();
-                });
+                await ajax.patch(illustrationUrls.updateIllustrationById(this.data.id), payload);
             } else {
-                ajax.post(illustrationUrls.createIllustration(), payload, () => {
-                    const main = new MainPage(this.parent);
-                    main.render();
-                });
+                await ajax.post(illustrationUrls.createIllustration(), payload);
             }
+
+            const main = new MainPage(this.parent);
+            main.render();
         });
 
         document.getElementById("cancel").addEventListener("click", () => {
