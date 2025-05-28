@@ -1,4 +1,4 @@
-import{M as s}from"./index-xCs3yI10.js";class r{constructor(t){this.parent=t}getHTML(t){return`
+import{M as s}from"./index-BLGYjv1j.js";class r{constructor(t){this.parent=t}getHTML(t){return`
             <div class="card mb-3">
                 <img src="${t.src}" class="img-fluid w-100" alt="картинка">
                 <div class="card-body">
