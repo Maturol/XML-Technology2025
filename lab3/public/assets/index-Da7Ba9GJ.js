@@ -1,4 +1,4 @@
-import{a,i as n,M as i}from"./index-BLGYjv1j.js";class o{constructor(t,e=null){this.parent=t,this.data=e}get pageRoot(){return document.getElementById("edit-illustration-page")}getHTML(){const t=this.data||{title:"",author:"",src:"",date:"",likes:"",description:""};return`
+import{a,i as n,M as i}from"./index-Dr3PC8dq.js";class o{constructor(t,e=null){this.parent=t,this.data=e}get pageRoot(){return document.getElementById("edit-illustration-page")}getHTML(){const t=this.data||{title:"",author:"",src:"",date:"",likes:"",description:""};return`
             <div class="container mt-4 text-light">
                 <h3>${this.data?"Редактировать":"Добавить"} иллюстрацию</h3>
                 <form id="illustration-form" class="mb-4">
