@@ -1,11 +1,13 @@
 import { IllustrationCardComponent } from "../../components/illustration-card/index.js";
-import { IllustrationPage } from "../illustration/index.js";
 import {sumOfSquares, isEqualObj, isEqual, isPalindrom, isPalindromDoWhile} from "../../utils/functions.js";
+import { ajax } from "../../modules/ajax.js";
+import { illustrationUrls } from "../../modules/illustrationUrls.js";
+
 
 export class MainPage {
     constructor(parent) {
         this.parent = parent;
-        this.data = this.getData()
+        this.data = [];
     }
 
     get pageRoot() {
@@ -13,22 +15,35 @@ export class MainPage {
     }
 
     clickCard(id) {
-        const illustration = this.data.find(item => item.id === id)
-        const illustrationPage = new IllustrationPage(this.parent, illustration)
-        illustrationPage.render()
+        ajax.get(illustrationUrls.getIllustrationById(id), async (data) => {
+            const module = await import("../illustration/index.js");
+            const IllustrationPage = module.IllustrationPage;
+            const illustrationPage = new IllustrationPage(this.parent, data);
+            illustrationPage.render();
+        });
+    }
+
+    editCard(item) {
+        import("../add-edit-illustration/index.js").then((module) => {
+            const EditPage = module.EditIllustrationPage;
+            const page = new EditPage(this.parent, item);
+            page.render();
+        });
     }
 
     deleteCard(id) {
-        this.data = this.data.filter(item => item.id !== id);
-        this.render();
+        ajax.delete(illustrationUrls.removeIllustrationById(id), () => {
+            this.data = this.data.filter(item => item.id !== id);
+            this.renderData(this.data);
+        });
     }
 
     addCard() {
-        if (this.data.length === 0) return;
-        const newCard = { ...this.data[0] };
-        newCard.id = Math.max(...this.data.map(d => d.id)) + 1;
-        this.data.push(newCard);
-        this.render();
+        import("../add-edit-illustration/index.js").then((module) => {
+            const EditPage = module.EditIllustrationPage;
+            const page = new EditPage(this.parent);
+            page.render();
+        });
     }
 
     getHTML() {
@@ -63,32 +78,13 @@ export class MainPage {
         `;
     }
 
-    getData() {
-        return [
-          { id: 1, src: "https://cdna.artstation.com/p/assets/images/images/018/773/854/large/shin-jong-hun-asdasf.jpg?1560684630", title: "Elule", author: "Shin Jong Hun", date: "2019-06-16", description: "A magical character painted in a fantasy setting.", likes: 12 },
-          { id: 2, src: "https://cdnb.artstation.com/p/assets/images/images/045/336/111/large/lorenzo-lanfranconi-painting-san-donato-3.jpg?1642491687", title: "Walk to San Donato", author: "Lorenzo Lanfranconi", date: "2022-01-18", description: "A serene landscape in traditional style.", likes: 5 },
-          { id: 3, src: "https://cdna.artstation.com/p/assets/images/images/034/605/970/large/shin-jong-hun-1612619763114.jpg?1612746686", title: "Mother Nature", author: "Shin Jong Hun", date: "2021-02-08", description: "Places I want to go...", likes: 6 },
-          { id: 4, src: "https://cdna.artstation.com/p/assets/images/images/019/693/026/large/wangjie-li-apex-bangalore.jpg?1564605666", title: "Bangalore", author: "Wangjie Li", date: "2019-06-25", description: "Illustration and sketches of Bangalore from Apex...", likes: 17 },
-          { id: 5, src: "https://cdnb.artstation.com/p/assets/images/images/033/511/717/large/finnian-macmanus-aroth1.jpg?1609874157", title: "Machines of Eroth", author: "Finnian MacManus", date: "2021-08-03", description: "A city of clockwork machinery...", likes: 10 },
-          { id: 6, src: "https://cdnb.artstation.com/p/assets/images/images/018/724/051/large/bo-chen-dark-cosmic-jhin-final-splash-1920.jpg?1560454527", title: "Dark Cosmic Jhin", author: "Bo Chen", date: "2019-02-12", description: "He is kind of between Dark Star and Cosmic...", likes: 30 },
-          { id: 7, src: "https://cdnb.artstation.com/p/assets/images/images/026/594/027/large/terence-cantal-queenfrozen-finale3.jpg?1660232512", title: "Frozen Queen", author: "Terence CANTAL", date: "2020-05-07", description: "This was a challenge to myself...", likes: 12 },
-          { id: 8, src: "https://cdna.artstation.com/p/assets/images/images/055/128/704/large/sylvain-sarrailh-cypress-cliff.jpg?1666189543", title: "The Cypress Cliff", author: "Sylvain Sarrailh", date: "2023-04-15", description: "Illustration made for the exhibition Art Ex Machina at Toulouse.", likes: 7 }
-        ];
-      }
-    
-
-    render() {
-        this.parent.innerHTML = this.getHTML();
-
-        document.getElementById("add-card").addEventListener("click", () => this.addCard());
-        document.getElementById("search-input").addEventListener("input", (e) => this.filterCards(e.target.value));
-
-        this.displayCards(this.data);
-
+    fillSelectOptions(data) {
         const select1 = document.getElementById("illustration-1");
         const select2 = document.getElementById("illustration-2");
+        select1.innerHTML = '';
+        select2.innerHTML = '';
 
-        this.data.forEach((item, index) => {
+        data.forEach((item) => {
             const option1 = document.createElement("option");
             const option2 = document.createElement("option");
             option1.value = option2.value = item.id;
@@ -97,8 +93,50 @@ export class MainPage {
             select1.appendChild(option1);
             select2.appendChild(option2);
         });
+    }
+
+    getData() {
+        ajax.get(illustrationUrls.getIllustrations(), (data) => {
+            const normalizedData = data.map(item => ({
+                id: item.id,
+                src: item.src,
+                title: item.title,
+                author: item.author,
+                date: item.date,
+                description: item.description,
+                likes: item.likes
+            }));
+            this.data = normalizedData;
+            this.renderData(data);
+        });
+    }
+    
+    renderData(items) {
+        this.pageRoot.innerHTML = '';
+
+        items.forEach((item) => {
+            const card = new IllustrationCardComponent(this.pageRoot);
+            card.render(
+                item,
+                () => this.clickCard(item.id),
+                () => this.deleteCard(item.id),
+                () => this.editCard(item)
+            );
+        });
+
+        this.fillSelectOptions(items);
+    }
+
+    render() {
+        this.parent.innerHTML = '';
+        this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+
+        document.getElementById("add-card").addEventListener("click", () => this.addCard());
+        document.getElementById("search-input").addEventListener("input", (e) => this.filterCards(e.target.value));
 
         document.getElementById("compare-illustrations").addEventListener("click", () => {
+            const select1 = document.getElementById("illustration-1");
+            const select2 = document.getElementById("illustration-2");
             const id1 = parseInt(select1.value);
             const id2 = parseInt(select2.value);
             const resultBox = document.getElementById("compare-result");
@@ -164,11 +202,13 @@ export class MainPage {
     
             resultDiv.innerHTML = output;
         });
+
+        this.getData();
     }
 
     filterCards(query) {
-        const filteredData = this.data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-        this.displayCards(filteredData);
+        const filtered = this.data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+        this.renderData(filtered);
     }
 
     displayCards(data) {
@@ -179,7 +219,8 @@ export class MainPage {
             card.render(
                 item,
                 () => this.clickCard(item.id),
-                () => this.deleteCard(item.id)
+                () => this.deleteCard(item.id),
+                () => this.editCard(item)
             );
         });
     }

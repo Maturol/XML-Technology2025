@@ -16,6 +16,7 @@ export class IllustrationCardComponent {
                                 <h5 class="card-title">${data.title}</h5>
                                 <p class="card-text"><strong>Автор:</strong> ${data.author}</p>
                                 <button id="click-card-${data.id}" class="btn btn-info">Подробнее</button>
+                                <button id="edit-card-${data.id}" class="btn btn-warning">Редактировать</button>
                                 <button id="delete-card-${data.id}" class="btn btn-danger">Удалить</button>
                             </div>
                         </div>
@@ -25,14 +26,15 @@ export class IllustrationCardComponent {
         )
     }
 
-    addListeners(data, clickListener, deleteListener) {
+    addListeners(data, clickListener, deleteListener, editListener) {
         document.getElementById(`click-card-${data.id}`).addEventListener("click", clickListener);
+        document.getElementById(`edit-card-${data.id}`).addEventListener("click", editListener);
         document.getElementById(`delete-card-${data.id}`).addEventListener("click", deleteListener);
     }
 
-    render(data, clickListener, deleteListener) {
+    render(data, clickListener, deleteListener, editListener) {
         const html = this.getHTML(data)
         this.parent.insertAdjacentHTML('beforeend', html)
-        this.addListeners(data, clickListener, deleteListener)
+        this.addListeners(data, clickListener, deleteListener, editListener)
     }
 }
