@@ -1,34 +1,38 @@
 [
-    {
-        "id": 1,
-        "src": "https://cdna.artstation.com/p/assets/images/images/018/773/854/large/shin-jong-hun-asdasf.jpg?1560684630",
-        "title": "Elune",
-        "author": "Shin Jong Hun",
-        "date": "2019-06-16",
-        "description": "A magical character painted in a fantasy setting."
-    },
-    {
-        "id": 2,
-        "src": "https://cdnb.artstation.com/p/assets/images/images/045/336/111/large/lorenzo-lanfranconi-painting-san-donato-3.jpg?1642491687",
-        "title": "Walk to San Donato",
-        "author": "Lorenzo Lanfranconi",
-        "date": "2022-01-18",
-        "description": "A serene landscape in traditional style."
-    },
-    {
-        "id": 3,
-        "src": "https://cdna.artstation.com/p/assets/images/images/034/605/970/large/shin-jong-hun-1612619763114.jpg?1612746686",
-        "title": "Mother Nature",
-        "author": "Shin Jong Hun",
-        "date": "2021-02-08",
-        "description": "Places I want to go. A combination of refreshing green, blue and white. Nature is always beautiful."
-    },
-    {
-        "id": 4,
-        "src": "https://cdna.artstation.com/p/assets/images/images/019/693/026/large/wangjie-li-apex-bangalore.jpg?1564605666",
-        "title": "Bangalore",
-        "author": "Wangjie Li",
-        "date": "2019-06-25",
-        "description": "Illustration and sketches of Bangalore from Apex. I'm glad I can work for this game, it's amazing!"
-    }
+  {
+    "id": 1,
+    "src": "https://cdna.artstation.com/p/assets/images/images/018/773/854/large/shin-jong-hun-asdasf.jpg?1560684630",
+    "title": "Элуна",
+    "author": "Шин Джон Хун",
+    "date": "2019-06-16",
+    "description": "Волшебный персонаж, изображенный в фэнтезийной обстановке.",
+    "likes": 12
+  },
+  {
+    "id": 2,
+    "src": "https://cdnb.artstation.com/p/assets/images/images/045/336/111/large/lorenzo-lanfranconi-painting-san-donato-3.jpg?1642491687",
+    "title": "Прогулка до Сан-Донато",
+    "author": "Лоренцо Ланфранкони",
+    "date": "2022-01-18",
+    "description": "Спокойный пейзаж в традиционном стиле.",
+    "likes": 5
+  },
+  {
+    "id": 3,
+    "src": "https://cdna.artstation.com/p/assets/images/images/034/605/970/large/shin-jong-hun-1612619763114.jpg?1612746686",
+    "title": "Мать-природа",
+    "author": "Шин Джон Хун",
+    "date": "2021-02-08",
+    "description": "Места, куда я хочу поехать...",
+    "likes": 6
+  },
+  {
+    "id": 4,
+    "src": "https://cdna.artstation.com/p/assets/images/images/019/693/026/large/wangjie-li-apex-bangalore.jpg?1564605666",
+    "title": "Бангалор",
+    "author": "Вангджи Ли",
+    "date": "2019-06-25",
+    "description": "Иллюстрации и зарисовки Бангалора от Apex...",
+    "likes": 17
+  }
 ]
