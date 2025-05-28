@@ -24,7 +24,7 @@ class Ajax {
         });
 
         if (res.status === 204 || res.headers.get("content-length") === "0") {
-            return null; // или return {}; если ожидаете объект
+            return null;
         }
 
         const text = await res.text();

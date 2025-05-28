@@ -205,8 +205,17 @@ export class MainPage {
     }
 
     filterCards(query) {
-        const filtered = this.data.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-        this.renderData(filtered);
+        if (!query.trim()) {
+            this.renderData(this.data);
+            return;
+        }
+
+        ajax.get(illustrationUrls.searchByTitle(query)).then(filtered => {
+            this.renderData(filtered);
+        }).catch(error => {
+            console.error("Ошибка при поиске:", error);
+            this.renderData([]);
+        });
     }
 
     displayCards(data) {
