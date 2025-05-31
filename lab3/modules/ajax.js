@@ -1,40 +1,127 @@
 class Ajax {
-    async get(url) {
-        const res = await fetch(url);
-        const data = await res.json();
-        return data;
+    /**
+     * GET запрос
+     * @param {string} url - Адрес запроса
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    async get(url, callback=null) {
+        try {
+            const response = await fetch(url);
+                        
+            const data = await response.json();
+            
+            if (callback !== null) {callback(data, response.status);}
+            
+            return data;
+            
+        } catch (error) {
+            console.error('Ошибка GET запроса:', error);
+            
+        }
     }
 
-    async post(url, payload) {
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+    /**
+     * POST запрос
+     * @param {string} url - Адрес запроса
+     * @param {object} data - Данные для отправки
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    async post(url, data, callback=null) {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-        const text = await res.text();
-        return text ? JSON.parse(text) : null;
+            let responseData = null
+            try {
+                responseData = await response.json(); 
+            }
+            catch (e){
+                responseData = null
+            }
+
+            if (callback) {
+                callback(responseData, response.status);
+            }
+
+            return responseData;
+
+        } catch (error) {
+            console.error('Ошибка POST запроса:', error);
+            
+        }
     }
 
-    async patch(url, payload) {
-        const res = await fetch(url, {
+    /**
+     * PATCH запрос
+     * @param {string} url - Адрес запроса
+     * @param {object} data - Данные для обновления
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    async patch(url, data, callback=null)
+    {
+        try {
+            const response = await fetch (url, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            });
+            let responseData = null
+            try {
+                responseData = await response.json(); 
+            }
+            catch (e){
+                responseData = null
+            }
+            if (callback !== null) {callback(responseData, response.status)}
+            return data;
+        } catch (error)
+        {
+            console.error('Ошибка PATCH запроса:', error);
+        }
+    }
 
-        if (res.status === 204 || res.headers.get("content-length") === "0") {
-            return null;
+
+    /**
+     * DELETE запрос
+     * @param {string} url - Адрес запроса
+     * @param {function} callback - Функция обратного вызова (data, status)
+     */
+    async delete(url, callback=null) {
+        try {
+        const response = await fetch(url, {
+            method: 'DELETE'
+        });
+        let data = null
+        try { // тут try потому что может быть пустой ответ
+            data = await response.json(); 
+        }
+        catch (e){
+            data = null
+        }
+        
+
+        if(callback !== null) 
+        {
+            callback(data, response.status)
         }
 
-        const text = await res.text();
-        return text ? JSON.parse(text) : null;
+        return data
+        } catch (error)
+        {
+            console.error('Ошибка DELETE запроса:', error);
+        }
+
+
     }
 
-    async delete(url) {
-        const res = await fetch(url, { method: 'DELETE' });
-        return res.ok;
-    }
+
 }
 
 export const ajax = new Ajax();
