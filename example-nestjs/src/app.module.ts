@@ -5,5 +5,7 @@ import { IllustrationsModule } from './Stocks/illustrations.module';
 
 @Module({
   imports: [IllustrationsModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
