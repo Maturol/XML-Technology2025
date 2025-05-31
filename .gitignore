@@ -1,1 +1,2 @@
-example-nestjs
+example-nestjs/dist
+example-nestjs/node_modules
